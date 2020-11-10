@@ -18,15 +18,29 @@ BUTTONS = [
   ['0', '00','.', '=','+']
 ]
 
+mem=0.0
 
 def make_click(ch):
     def click(e):
+        global mem
         #print(ch)
         if ch == '=': 
           calc(0)
           return
         elif ch == 'C': 
           disp.delete(len(disp.get())-1,tk.END)
+          return
+        elif ch == 'M+': 
+          mem=mem+float(calc(0))
+          return
+        elif ch == 'M-': 
+          mem=mem-float(calc(0))
+          return
+        elif ch == 'MR': 
+          disp.insert(tk.END, mem)
+          return
+        elif ch == 'MC': 
+          mem=0
           return
         else: disp.insert(tk.END, ch)
     return click
@@ -37,6 +51,7 @@ def calc(e):
     name = ffi.new('char[]', bytes(myname, 'utf-8'))
     msg = rustlib.rust_fn(name)
     label["text"] = '= ' + str(format(msg))
+    return format(msg)
 
 
 win = tk.Tk()
