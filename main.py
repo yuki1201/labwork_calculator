@@ -25,7 +25,7 @@ def make_click(ch):
         global mem
         global gt
         if ch == '=': 
-          label["text"] = '= ' + str(calc())
+          label["text"] = '= ' + str(round(calc(),4))
           gt=gt+float(calc())
           return
         elif ch == 'tax': 
@@ -69,7 +69,7 @@ def make_click(ch):
 def calc():
     myname = disp.get()
     myname=myname.replace('+tax', '*1.1')
-    myname=myname.replace('%', '*0.01')
+    myname=myname.replace('%', '/100')
     name = ffi.new('char[]', bytes(myname, 'utf-8'))
     msg = rustlib.rust_fn(name)
     return float(format(msg))
