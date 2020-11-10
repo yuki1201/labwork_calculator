@@ -25,7 +25,7 @@ def make_click(ch):
         global mem
         #print(ch)
         if ch == '=': 
-          calc(0)
+          calc()
           return
         elif ch == 'C': 
           disp.delete(len(disp.get())-1,tk.END)
@@ -46,7 +46,7 @@ def make_click(ch):
     return click
 
 
-def calc(e):
+def calc():
     myname = disp.get()
     name = ffi.new('char[]', bytes(myname, 'utf-8'))
     msg = rustlib.rust_fn(name)
