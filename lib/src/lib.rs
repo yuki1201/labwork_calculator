@@ -50,6 +50,7 @@ fn fn_preformater(mut s:String) -> String{
 		s=s.replace(")-",") -");
 		s=s.replace(")+",") +");
 		s=s.replace(")/",") /");
+        s=s.replace(")*",") *");
 		s=s.replace("))",") )");
 		s=s.replace("((","( (");
 	}
