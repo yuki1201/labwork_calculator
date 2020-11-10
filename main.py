@@ -69,6 +69,7 @@ def make_click(ch):
 def calc():
     myname = disp.get()
     myname=myname.replace('+tax', '*1.1')
+    myname=myname.replace('%', '*0.01')
     name = ffi.new('char[]', bytes(myname, 'utf-8'))
     msg = rustlib.rust_fn(name)
     return float(format(msg))
