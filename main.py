@@ -56,7 +56,7 @@ def make_click(ch):
           disp.insert(tk.END, mem)
           return
         elif ch == 'MC': 
-          label["text"] = '= ' + str(gt)
+          mem=0.0
           return
         elif ch == 'GT': 
           disp.insert(tk.END, gt)
@@ -91,8 +91,5 @@ for y, cols in enumerate(BUTTONS):
       btn = tk.Button(fr,text=n,font=('', 20),width=3,height=1,highlightbackground='#3E4149')
       btn.grid(row=y+1, column=x+1)
       btn.bind('<1>', make_click(n))
-
-
-# ウィンドウを動かす --- (*7)
 
 win.mainloop()
