@@ -28,6 +28,9 @@ def make_click(ch):
           label["text"] = '= ' + str(calc())
           gt=gt+float(calc())
           return
+        elif ch == 'tax': 
+          disp.insert(tk.END, '+tax')
+          return
         elif ch == 'CE': 
           disp.delete(len(disp.get())-1,tk.END)
           return
@@ -65,9 +68,10 @@ def make_click(ch):
 
 def calc():
     myname = disp.get()
+    myname=myname.replace('+tax', '*1.1')
     name = ffi.new('char[]', bytes(myname, 'utf-8'))
     msg = rustlib.rust_fn(name)
-    return format(msg)
+    return float(format(msg))
 
 
 win = tk.Tk()
