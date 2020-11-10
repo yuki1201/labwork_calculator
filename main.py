@@ -10,36 +10,43 @@ ffi.cdef("""
 """)
 
 BUTTONS = [
-  ['MC','MR','M+','M-','close'],
-  ['GT','(', ')', '^','%'],
-  ['tax','7', '8', '9', '/'],
+  ['MC','MR','M+','M-','GT'],
+  ['tax','(', ')', '^','%'],
+  ['CE','7', '8', '9', '/'],
   ['C', '4', '5', '6', '*'],
   ['AC','1', '2', '3', '-'],
   ['0', '00','.', '=','+']
 ]
 
 mem=0.0
-
+gt=0.0
 def make_click(ch):
     def click(e):
         global mem
+        global gt
         if ch == '=': 
           label["text"] = '= ' + str(calc())
+          gt=gt+float(calc())
           return
         elif ch == 'C': 
           disp.delete(len(disp.get())-1,tk.END)
           return
         elif ch == 'M+': 
-          mem=mem+float(calc(0))
+          mem=mem+float(calc())
+          label["text"] = '= ' + str(calc())
           return
         elif ch == 'M-': 
-          mem=mem-float(calc(0))
+          mem=mem-float(calc())
+          label["text"] = '= ' + str(calc())
           return
         elif ch == 'MR': 
           disp.insert(tk.END, mem)
           return
         elif ch == 'MC': 
-          mem=0
+          label["text"] = '= ' + str(gt)
+          return
+        elif ch == 'GT': 
+          disp.insert(tk.END, gt)
           return
         else: 
           disp.insert(tk.END, ch)
