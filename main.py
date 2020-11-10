@@ -28,8 +28,18 @@ def make_click(ch):
           label["text"] = '= ' + str(calc())
           gt=gt+float(calc())
           return
-        elif ch == 'C': 
+        elif ch == 'CE': 
           disp.delete(len(disp.get())-1,tk.END)
+          return
+        elif ch == 'C': 
+          disp.delete(0,tk.END)
+          label["text"] =''
+          return
+        elif ch == 'AC': 
+          disp.delete(0,tk.END)
+          label["text"] =''
+          mem=0.0
+          gt=0.0
           return
         elif ch == 'M+': 
           mem=mem+float(calc())
