@@ -10,11 +10,12 @@ ffi.cdef("""
 """)
 
 BUTTONS = [
-  ['(', ')', '^', '='],
-  ['7', '8', '9', '/'],
-  ['4', '5', '6', '*'],
-  ['1', '2', '3', '-'],
-  ['0', '.', 'C', '+']
+  ['MC','MR','M+','M-','close'],
+  ['GT','(', ')', '^','%'],
+  ['tax','7', '8', '9', '/'],
+  ['C', '4', '5', '6', '*'],
+  ['AC','1', '2', '3', '-'],
+  ['0', '00','.', '=','+']
 ]
 
 
@@ -40,7 +41,8 @@ def calc(e):
 
 win = tk.Tk()
 win.title("万能でんたくんα")
-win.geometry("255x240")
+win.geometry("320x270")
+win.configure(background='#3E4149')
 disp = tk.Entry(win, font=('', 20), justify="center",highlightbackground='#3E4149')
 disp.pack(fill='x')
 disp.bind('<Return>', calc)
@@ -50,9 +52,9 @@ fr = tk.Frame(win)
 fr.pack()
 for y, cols in enumerate(BUTTONS):
     for x, n in enumerate(cols):
-        btn = tk.Button(fr,text=n,font=('', 20),width=3,height=1,highlightbackground='#3E4149')
-        btn.grid(row=y+1, column=x+1)
-        btn.bind('<1>', make_click(n))
+      btn = tk.Button(fr,text=n,font=('', 20),width=3,height=1,highlightbackground='#3E4149')
+      btn.grid(row=y+1, column=x+1)
+      btn.bind('<1>', make_click(n))
 
 
 # ウィンドウを動かす --- (*7)
