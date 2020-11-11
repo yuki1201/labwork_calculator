@@ -29,10 +29,11 @@ fn fn_number(inpt_string:&mut Vec<char>)->f32 {
 
     let mut return_str = String::new();
     //println!("{:?}",inpt_string);
-    while  inpt_string.len()>0&&(inpt_string[0].is_digit(10)||inpt_string[0] == '.'){
+    while  inpt_string.len()>0&&(inpt_string[0].is_digit(10)||inpt_string[0] == '.')||(return_str.len()==0&&inpt_string[0] == '-'){
         return_str.push(inpt_string[0]);
         inpt_string.remove(0);
     }
+    println!("{:?}",return_str);
     return return_str.parse::<f32>().unwrap();
 }
 
