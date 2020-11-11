@@ -43,9 +43,19 @@ fn fn_number(inpt_string:&mut Vec<char>)->f32 {
 
 fn fn_expr(inpt_string:&mut Vec<char>) -> f32 {
     let mut num = fn_number(inpt_string);
-    while inpt_string.len()>0&&inpt_string[0]=='+'{
-        inpt_string.remove(0);
-        num=num+fn_number(inpt_string);
+    while inpt_string.len()>0{
+        match inpt_string[0] {
+            '+' => {
+                inpt_string.remove(0);
+                num=num+fn_number(inpt_string);
+            },
+            '-' => {
+                inpt_string.remove(0);
+                num=num-fn_number(inpt_string);
+            },
+            _ => return num,
+        }
+
     }
     return num
 }
