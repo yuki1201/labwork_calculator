@@ -29,16 +29,13 @@ fn fn_number(inpt_string:&mut Vec<char>)->f32 {
 
     let mut return_str = String::new();
     println!("{:?}",inpt_string);
-    loop {
-        if inpt_string.len()>0&&(inpt_string[0].is_digit(10)||inpt_string[0] == '.'){
-            return_str.push(inpt_string[0]);
-            inpt_string.remove(0);
-        }
-        else{
-            return return_str.parse::<f32>().unwrap();
-        }
+    while  inpt_string.len()>0&&(inpt_string[0].is_digit(10)||inpt_string[0] == '.'){
+        return_str.push(inpt_string[0]);
+        inpt_string.remove(0);
     }
+    return return_str.parse::<f32>().unwrap();
 }
+
 
 
 fn fn_expr(inpt_string:&mut Vec<char>) -> f32 {
@@ -61,20 +58,32 @@ fn fn_expr(inpt_string:&mut Vec<char>) -> f32 {
 }
 
 fn fn_term(inpt_string:&mut Vec<char>) -> f32 {
-    let mut num = fn_number(inpt_string);
+    let mut num = fn_factor(inpt_string);
     while inpt_string.len()>0{
         match inpt_string[0] {
             '*' => {
                 inpt_string.remove(0);
-                num=num*fn_number(inpt_string);
+                num=num*fn_factor(inpt_string);
             },
             '/' => {
                 inpt_string.remove(0);
-                num=num/fn_number(inpt_string);
+                num=num/fn_factor(inpt_string);
             },
             _ => return num,
         }
 
     }
     return num
+}
+
+fn fn_factor(inpt_string:&mut Vec<char>) -> f32 {
+    if inpt_string[0]=='(' {
+        inpt_string.remove(0);
+        let num = fn_expr(inpt_string);
+        if inpt_string[0]==')' {
+            inpt_string.remove(0);
+        }
+        return num;
+    }
+    return fn_number(inpt_string);
 }
