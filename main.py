@@ -13,7 +13,7 @@ BUTTONS = [
   ['MC','MR','M+','M-','GT'],
   ['tax','(', ')', '^','%'],
   ['CE','7', '8', '9', '/'],
-  ['C', '4', '5', '6', '*'],
+  ['C', '4', '5', '6', '×'],
   ['AC','1', '2', '3', '-'],
   ['0', '00','.', '=','+']
 ]
@@ -61,6 +61,8 @@ def make_click(ch):
         elif ch == 'GT': 
           disp.insert(tk.END, gt)
           return
+        elif ch=='×':
+          disp.insert(tk.END,'*')
         else: 
           disp.insert(tk.END, ch)
     return click
