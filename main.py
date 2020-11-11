@@ -25,8 +25,9 @@ def make_click(ch):
         global mem
         global gt
         if ch == '=': 
-          label["text"] = '= ' + str(round(calc(),4))
-          gt=gt+float(calc())
+          ans=round(calc(),4)
+          label["text"] = '= ' + str(ans)
+          gt=gt+ans
           return
         elif ch == 'tax': 
           disp.insert(tk.END, '+tax')
@@ -45,12 +46,14 @@ def make_click(ch):
           gt=0.0
           return
         elif ch == 'M+': 
-          mem=mem+float(calc())
-          label["text"] = '= ' + str(calc())
+          ans=round(calc(),4)
+          mem=mem+ans
+          label["text"] = '= ' + str(ans)
           return
         elif ch == 'M-': 
-          mem=mem-float(calc())
-          label["text"] = '= ' + str(calc())
+          ans=round(calc(),4)
+          mem=mem-ans
+          label["text"] = '= ' + str(ans)
           return
         elif ch == 'MR': 
           disp.insert(tk.END, mem)
@@ -78,7 +81,7 @@ def calc():
 
 
 win = tk.Tk()
-win.title("万能でんたくんα")
+win.title("万能でんたくんβ")
 win.geometry("300x250")
 win.configure(background='#3E4149')
 disp = tk.Entry(win, font=('', 20), justify="center",highlightbackground='#3E4149')
