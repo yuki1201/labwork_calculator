@@ -5,14 +5,18 @@ use std::ffi::CStr;
 #[no_mangle]
 
 pub extern fn rust_fn(name: *const c_char,tf:bool) -> f32 {
+    println!("{:?}",tf);
     let hoge = unsafe{CStr::from_ptr(name)};
     let inpt_string=hoge.to_str();
     let mut ans=0.0;
     match inpt_string {
         Ok(v) => {
-            let mut inpt_string: Vec<char> = v.to_string().chars().collect();
             if tf {
+                let mut inpt_string: Vec<char> = v.to_string().chars().collect();
                 ans=fn_expr(&mut inpt_string);
+            }
+            else {
+                ans=rpn(v);
             }
         },
         _ => println!("err"),
@@ -82,4 +86,32 @@ fn fn_factor(inpt_string:&mut Vec<char>) -> f32 {
         return num;
     }
     return fn_number(inpt_string);
+}
+
+fn rpn(exp: &str) -> f32 {
+    let mut stack= Vec::new();
+    for token in exp.split_whitespace() {
+        if let Ok(num) = token.parse::<f32>(){
+            stack.push(num)
+        }
+        else {
+            match token {
+                "+" => apply2(&mut stack,|x, y| x + y),
+                "-" => apply2(&mut stack,|x, y| x - y),
+                "*" => apply2(&mut stack,|x, y| x * y),
+                "/" => apply2(&mut stack,|x, y| x / y),
+                _ => panic!("Unknown Operator:{}",token),
+            }
+        }
+    }
+    return stack.pop().expect("stack underflow");
+}
+
+fn apply2<F:Fn(f32,f32)->f32>(stack :&mut Vec<f32>,fun:F){
+    if let (Some(y),Some(x)) = (stack.pop(),stack.pop()) {
+        stack.push(fun(x,y));
+    }
+    else {
+        panic!("Stack underflow");
+    }
 }
