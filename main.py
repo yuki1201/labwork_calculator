@@ -6,7 +6,7 @@ ffi = FFI()
 rustlib = ffi.dlopen('lib/target/release/libcalcr.dylib')
 
 ffi.cdef("""
-    float rust_fn(const char *n);
+    float rust_fn(const char *n,bool);
 """)
 
 BUTTONS = [
@@ -76,7 +76,7 @@ def calc():
     myname=myname.replace('+tax', '*1.1')
     myname=myname.replace('%', '/100')
     name = ffi.new('char[]', bytes(myname, 'utf-8'))
-    msg = rustlib.rust_fn(name)
+    msg = rustlib.rust_fn(name,True)
     return float(format(msg))
 
 

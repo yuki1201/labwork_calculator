@@ -4,14 +4,16 @@ use std::ffi::CStr;
 
 #[no_mangle]
 
-pub extern fn rust_fn(name: *const c_char) -> f32 {
+pub extern fn rust_fn(name: *const c_char,tf:bool) -> f32 {
     let hoge = unsafe{CStr::from_ptr(name)};
     let inpt_string=hoge.to_str();
     let mut ans=0.0;
     match inpt_string {
         Ok(v) => {
             let mut inpt_string: Vec<char> = v.to_string().chars().collect();
-            ans=fn_expr(&mut inpt_string);
+            if tf {
+                ans=fn_expr(&mut inpt_string);
+            }
         },
         _ => println!("err"),
     };
