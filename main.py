@@ -2,26 +2,20 @@ import tkinter as tk
 from cffi import FFI
 
 ffi = FFI()
-
 rustlib = ffi.dlopen('lib/target/release/libcalcr.dylib')
-
-ffi.cdef("""
-    float rust_fn(const char *n,bool);
-""")
-
-
+ffi.cdef("""float rust_fn(const char *n,bool);""")
 
 BUTTONS = [
   ['rpn','in','spc'],
   ['MC','MR','M+','M-','GT'],
-  ['tax','(', ')', '^','%'],
+  ['+tax','(', ')', '^','%'],
   ['CE','7', '8', '9', '/'],
   ['C', '4', '5', '6', '×'],
   ['AC','1', '2', '3', '-'],
   ['0', '00','.', '=','+']
 ]
 
-
+mode=True
 mem=0.0
 gt=0.0
 def make_click(ch):
@@ -43,37 +37,29 @@ def make_click(ch):
         elif ch =='spc':
           disp.insert(tk.END, ' ')
           return
-        elif ch == 'tax': 
-          disp.insert(tk.END, '+tax')
-          return
-        elif ch == 'CE': 
-          disp.delete(len(disp.get())-1,tk.END)
-          return
-        elif ch == 'C': 
-          disp.delete(0,tk.END)
-          label["text"] =''
-          return
-        elif ch == 'AC': 
-          disp.delete(0,tk.END)
-          label["text"] =''
+        elif ch == 'MC': 
           mem=0.0
-          gt=0.0
           return
-        elif ch == 'M+': 
+        elif 'C' in ch:
+          if ch == 'CE': 
+            disp.delete(len(disp.get())-1,tk.END)
+          else:
+            disp.delete(0,tk.END)
+            label["text"] =''
+            if ch == 'AC':
+              mem=0.0
+              gt=0.0
+          return 
+        elif ch == 'M+' or ch == 'M-': 
           ans=round(calc(),4)
-          mem=mem+ans
-          label["text"] = '= ' + str(ans)
-          return
-        elif ch == 'M-': 
-          ans=round(calc(),4)
-          mem=mem-ans
+          if ch == 'M+':
+            mem=mem+ans
+          else:
+            mem=mem-ans
           label["text"] = '= ' + str(ans)
           return
         elif ch == 'MR': 
           disp.insert(tk.END, mem)
-          return
-        elif ch == 'MC': 
-          mem=0.0
           return
         elif ch == 'GT': 
           disp.insert(tk.END, gt)
